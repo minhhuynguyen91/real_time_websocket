@@ -1,7 +1,14 @@
-<%= form_for Message.new do |f| %>
+<% form_for Message.new do |f| %>
   <%= f.text_field :body %>
   <%= f.submit %>
 <% end %>
+
+<form id="js-socket">
+  <label>
+    <input type="text" placeholder="Type something..." />
+    WebSocket Style
+  </label>
+</form>
 
 <div class="messages"> 
   <%= render @messages %>
