@@ -7,6 +7,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new message_params
     if @message.save
+      ActionCable.server.broadcast 'chat', message: render_message(@message)
       flash[:success] = "Created message"
     else
       flash[:error] = "Error"
@@ -15,6 +16,10 @@ class MessagesController < ApplicationController
   end
 
   private
+    def render_message(message)
+      ApplicationController.render(partial: 'messages/message', locals: {message: message})
+    end
+
     def message_params
       params.require(:message).permit(:body)
     end
